@@ -1,10 +1,12 @@
 // Função adicionar task
 
-function addTask() {
+function addTask(evento1) {
+
+    const parentTask = evento1.target.parentNode;
 
     // titulo da task
 
-    const taskTitle = document.querySelector(".task-title").value;
+    const taskTitle = parentTask.querySelector(".task-title").value;
 
     if (taskTitle) {
 
@@ -14,12 +16,12 @@ function addTask() {
 
         // adicionar tarefa na lista
 
-        const list = document.querySelector(".box-list");
+        const list = document.querySelector(".testes");
         list.appendChild(newTask);
 
         // limpar texto
 
-        document.querySelector(".task-title").value = "";
+        parentTask.querySelector(".task-title").value = "";
     }
 }
 
@@ -28,7 +30,7 @@ function createTaskElement(title) {
     const randomId = Math.floor(Math.random() * 1000000);
 
     const template = `
-        <li class="task-box templateLi" id="${randomId}">
+        <li class="task-box" id="${randomId}">
             <span class="text">${title}</span>
             <span class="icons">
                 <i class="fa-solid fa-pencil"></i>
@@ -73,10 +75,27 @@ function completeTask(task) {
 
 // evento adicionar tarefa
 
-const addBtn = document.querySelector(".add-task-btn");
-addBtn.addEventListener("click", function(e) {
-    e.preventDefault();
-    addTask();
+// const elemPai = document.querySelector(".task-container");
+
+// elemPai.addEventListener("click", (ev1) => {
+    
+//     if(ev1.target.classList.contains("add-task-btn")) {
+//         ev1.preventDefault();
+//         addTask(ev1);
+//     }
+// })
+
+const elemPai = document.querySelectorAll(".card");
+
+elemPai.forEach((pai) => {
+
+    pai.addEventListener("click", (ev1) => {
+        if(ev1.target.getAttribute("id") === String(id12345) ) {
+            ev1.preventDefault();
+            addTask(ev1);
+        }
+    })
+
 });
 
 
