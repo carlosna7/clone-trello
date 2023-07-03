@@ -27,28 +27,26 @@ function addCard(evento2) {
     
     const randomId2 = Math.floor(Math.random() * 1000000);
   
-    const template = `
+    const template2 = `
     <div class="card">
                 
-        <!-- titulo da coluna e ícones -->
         <span class="title">
             <p class="text2">${title}</p>
             <i class="fa-solid fa-xmark"></i>
         </span>
   
-        <!-- tarefas que serão adicionadas -->
         <ul class="box-list" id="id${randomId2}">
             
         </ul>
   
-          <div>
+        <div>
             <input class="task-title" type="text" name="addTask" placeholder="Add task...">
             <button class="add-task-btn" id="${randomId2}" type="submit">+</button>
-          </div>
+        </div>
   
     </div>  
     `;
-    const fragment = document.createRange().createContextualFragment(template);
+    const fragment = document.createRange().createContextualFragment(template2);
   
     const newCard = fragment.querySelector(".card");
   
