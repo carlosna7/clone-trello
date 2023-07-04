@@ -78,11 +78,6 @@ section {
     text-decoration: line-through;
 }
 
-.task-container .card .box-list li.hideTask {
-    display: none;
-}
-
-
 .task-container .card .box-list li .icons i {
     margin-left: .5rem;
     cursor: pointer;
