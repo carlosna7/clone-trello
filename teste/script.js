@@ -1,4 +1,4 @@
-const taskContainer = document.querySelector(".task-container");
+const taskContainer = document.querySelector(".box-container");
 
 class CardList {
     constructor(place, title = "") {
@@ -27,6 +27,11 @@ class CardList {
         this.cardListElement = document.createElement('div');
         this.cardListElement.classList.add("card");
 
+        this.spanTitle = document.createElement("span");
+        this.spanTitle.classList.add("title");
+
+        this.div0 = document.createElement("div");
+
         this.p1 = document.createElement("p");
         this.p1.innerText = this.title;
 
@@ -34,18 +39,23 @@ class CardList {
         this.ul.classList.add("box-list");
 
         this.input = document.createElement('input');
+        this.input.placeholder = "Add task..."
         this.input.classList.add("task-title");
 
         this.button = document.createElement('button');
-        this.button.innerText = 'Add';
+        this.button.innerText = '+';
         this.button.classList.add("add-task-btn");
 
         // append elements
 
-        this.cardListElement.append(this.p1);
+        this.spanTitle.append(this.p1);
+
+        this.div0.append(this.input);
+        this.div0.append(this.button);
+  
+        this.cardListElement.append(this.spanTitle);
         this.cardListElement.append(this.ul);
-        this.cardListElement.append(this.input);
-        this.cardListElement.append(this.button);
+        this.cardListElement.append(this.div0);
 
         // add click events
 
@@ -300,3 +310,4 @@ addTodoListButton.addEventListener("click", () => {
     addTodoListInput.value = "";
    }
 });
+

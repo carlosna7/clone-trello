@@ -1,6 +1,107 @@
-.task-box {
-    padding: 10px;
-    background-color: grey;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    color: black;
+}
+
+header {
+    background: #fee9e9;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem 7%;
+    border-bottom: var(--border);
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 10;
+    height: 5rem;
+}
+
+header h1 {
+    color: black;
+}
+
+/* --------------------------------------------- */
+
+section {
+    /* background-color: #2a2a2a; */
+    background-color: #dbf6fe;
+    height: 100vh;
+}
+
+.task-container {
+    padding: 7rem 1rem 0 1rem;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 2.5rem;
+}
+
+.box-container {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 2.5rem;
+}
+
+.task-container .card {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    width: 300px; height: 100%;
+    border-radius: 7px;
+    padding: 1rem;
+}
+
+.task-container .card .title {
+    display: flex;
+    justify-content: space-between;
+    padding: 0rem 1rem;
+}
+
+.task-container .card .box-list {
+    margin-top: 1rem;
+}
+
+.task-container .card .box-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: .5rem 1rem;
+    background: #ededed;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
+
+
+
+
+
+.task-container .card .task-title {
+    border: none;
+    border-bottom: 2px solid black;
+    font-size: 1rem;
+    background: transparent;
+    width: 80%;
+}
+
+.task-container .card .task-title:focus {
+    outline: none;
+}
+
+.task-container .card .add-task-btn {
+    background-color: #fee9e9;
+    border: none;
+    font-size: 1.5rem;
+    padding: .1rem .7rem;
+    border-radius: 100%;
     cursor: pointer;
 }
 
@@ -10,59 +111,39 @@
 
 
 
+/* --------------------------------------------- */
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-*{
-    padding: 0;
-    margin: 0;
+.task-container .add-card{
+    width: 300px; height: 100%;
+    display: flex;
+    justify-content: space-between;
+    order: 2;
 }
 
-body{
-    /*background-color: rgb(30, 30, 95);*/
-    background-color: rgb(43, 43, 83);
-    font-family: "Open Sans";
+.task-container .add-card .card-title {
+    border: none;
+    border-bottom: 2px solid black;
+    font-size: 1rem;
+    background: transparent;
+    width: 85%;
 }
 
+.task-container .add-card .card-title:focus {
+    outline: none;
+}
+
+.task-container .add-card .add-card-btn {
+    background-color: #fee9e9;
+    border: none;
+    font-size: 1.5rem;
+    padding: .1rem .7rem;
+    border-radius: 100%;
+    cursor: pointer;
+}
+
+
+
+/* --------------------------------------------------------------------- */
 
 
 button{
@@ -78,15 +159,6 @@ button{
 #addTodoListDiv button{
     margin-left: 0.5em;
 }
-
-
-#root{
-    margin: 1em;
-    /*border: 1px solid grey;*/
-    /*display: flex;*/
-    min-width: 1200px;
-}
-
 
 .todoList{
     /*border: 1px solid red;*/
@@ -108,53 +180,20 @@ button{
     margin-left: 0.5em;
 }
 
-.card{
-    /*border: 1px solid blue;*/
-    border-radius: 4px;
-    border-bottom: rgb(180, 180, 180) 1px solid;
-    background: white;
-    margin: 0.5em 0 0 0;
-    padding: 0.5em;
-    font-size: 0.9em;
-    position: relative;
-
-    display: flex;
-    justify-content: space-between;
-
-    cursor: pointer;
-}
-
 .card button{
-    visibility: hidden;
-    height: max-content;
-
     background: none;
-    border: none;
-    padding: 0.3em;
-    
+    border: none;    
 }
-
-
-.card:hover button{
-    visibility: visible;
-}
-
-.card button:hover{
-    background-color: rgb(235, 235, 235);
-    border-radius: 4px;
-    cursor: pointer;
-}
-
 
 .menuContainer{
     display: flex;
-
     position: absolute;
     top: 0;
     left: 0;
     background-color: rgba(0, 0, 0, 0.8);
     width: 100%;
     height: 100%;
+    z-index: 11;
 }
 
 .menu{
@@ -163,18 +202,15 @@ button{
     background-color: rgb(235, 235, 235);
     width: 500px;
     min-height: 300px;
-
     margin: auto;
-
     padding: 1em;
-    border-radius: 4px;
-    
+    border-radius: 7px;
 }
 
 .menuTitle{
     font-weight: bold;
-    font-size: 1.5em;
-    margin-bottom: 1em;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
 }
 
 .menuDescription{
