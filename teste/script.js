@@ -239,7 +239,7 @@ class EditableText {
             this.text = this.input.value;
             this.card.state[this.property] = this.input.value;
             if(this.property == "text") {
-                this.card.p.innerText = this.input.value; // tirar o p para não ter masi erro 
+                this.card.p2.innerText = this.input.value; // usar o p2 e não o p no escopo
             }
 
             this.div.remove();
