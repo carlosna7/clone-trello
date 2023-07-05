@@ -25,6 +25,10 @@ header h1 {
     color: black;
 }
 
+.dragging {
+    opacity: 0.5;
+}
+
 /* --------------------------------------------- */
 
 section {

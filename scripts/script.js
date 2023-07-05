@@ -88,6 +88,7 @@ class Card {
 
         this.task = document.createElement('li');
         this.task.classList.add("task-box");
+        this.task.draggable = true;
 
         this.p2 = document.createElement('p');
         this.p2.innerText = this.state.text;
