@@ -125,8 +125,8 @@ class Card {
 
         // create elements
 
-        this.menuContainer = document.createElement("div");
-        this.menuContainer.classList.add("menuContainer");
+        this.modalContainer = document.createElement("div");
+        this.modalContainer.classList.add("modalContainer");
 
         this.menu = document.createElement("div");
         this.menu.classList.add("menu");
@@ -137,6 +137,9 @@ class Card {
         this.menuDescription = document.createElement("div");
         this.menuDescription.classList.add("menuDescription");
 
+        this.modalBtns = document.createElement("div")
+        this.modalBtns.classList.add("modal-btns")
+
         this.commentsInput = document.createElement("input");
         this.commentsInput.classList.add("commentsInput");
         this.commentsInput.classList.add("comment");
@@ -145,29 +148,31 @@ class Card {
         this.commentsButton = document.createElement('button');
         this.commentsButton.classList.add("commentsButton");
         this.commentsButton.classList.add("btn-save");
-        this.commentsButton.innerText = "Add";
+        this.commentsButton.innerText = "+";
 
         this.menuComments = document.createElement("div");
         this.menuComments.classList.add("menuComments");
 
         // append elements
 
-        taskContainer.append(this.menuContainer)
+        taskContainer.append(this.modalContainer)
         
-        this.menuContainer.append(this.menu);
+        this.modalContainer.append(this.menu);
+
+        this.modalBtns.append(this.commentsInput);
+        this.modalBtns.append(this.commentsButton);
 
         this.menu.append(this.menuTitle);
         this.menu.append(this.menuDescription);
-        this.menu.append(this.commentsInput);
-        this.menu.append(this.commentsButton);
+        this.menu.append(this.modalBtns)
         this.menu.append(this.menuComments);
 
         // add click events
 
-        this.menuContainer.addEventListener('click', (event) => {
+        this.modalContainer.addEventListener('click', (event) => {
             console.log(event.target);
-            if(event.target.classList.contains("menuContainer")) {
-                this.menuContainer.remove();
+            if(event.target.classList.contains("modalContainer")) {
+                this.modalContainer.remove();
             }
         });
         
@@ -241,7 +246,7 @@ class EditableText {
 
         this.p.remove();
         this.input.value = oldText;
-        this.saveButton.innerText = "Save";
+        this.saveButton.innerText = "Salvar";
         this.saveButton.className = "btn-save";
         this.input.classList.add("comment");
 
