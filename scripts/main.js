@@ -37,9 +37,10 @@ class CardList {
 
         this.ul = document.createElement('ul');
         this.ul.classList.add("box-list");
+        this.ul.draggable = true;
 
         this.input = document.createElement('input');
-        this.input.placeholder = "Add task..."
+        this.input.placeholder = "Adicionar task..."
         this.input.classList.add("task-title");
 
         this.button = document.createElement('button');
@@ -75,7 +76,7 @@ class Card {
         this.todoList = todoList;
         this.state = {
             text: text,
-            description: "Click to write a description...",
+            description: "Clique aqui para adicionar uma descrição...",
             comments: []
         }
 
@@ -144,7 +145,7 @@ class Card {
         this.commentsInput = document.createElement("input");
         this.commentsInput.classList.add("commentsInput");
         this.commentsInput.classList.add("comment");
-        this.commentsInput.placeholder = "Write a comment...";
+        this.commentsInput.placeholder = "Escreva um comentário...";
 
         this.commentsButton = document.createElement('button');
         this.commentsButton.classList.add("commentsButton");
@@ -168,7 +169,7 @@ class Card {
         this.menu.append(this.modalBtns)
         this.menu.append(this.menuComments);
 
-        // add click events
+        // aad cilck events
 
         this.modalContainer.addEventListener('click', (event) => {
             console.log(event.target);
@@ -264,7 +265,7 @@ class EditableText {
 
         function clickSaveButton(evento, objeto){
             if(evento.keyCode === 13 ) {
-                // Cancel the default action, if needed
+                // 13 keyCode Enter key
                 evento.preventDefault();
                 // Trigger the button element with a click
                 objeto.saveButton.click();

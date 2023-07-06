@@ -1,5 +1,5 @@
-function funcTest() {
-    const boxList = document.querySelectorAll(".box-list");
+function funcTeste() {
+    const boxContainer = document.querySelectorAll(".box-container");
 
     document.addEventListener("dragstart", (even) => {
         even.target.classList.add("dragging")
@@ -9,10 +9,10 @@ function funcTest() {
         even.target.classList.remove("dragging")
     });
 
-    boxList.forEach((item) => {
+    boxContainer.forEach((item) => {
         item.addEventListener("dragover", (even) => {
             const dragging = document.querySelector(".dragging");
-            const applyAfter = getNewPosition(item, even.clientY);
+            const applyAfter = getNewPosition(item, even.clientX);
 
             if(applyAfter) {
                 applyAfter.insertAdjacentElement("afterend", dragging);
@@ -22,19 +22,19 @@ function funcTest() {
         });
     });
 
-    function getNewPosition(column, posY) {
+    function getNewPosition(column, posX) {
         const cards = column.querySelectorAll(".task-box:not(.dragging)");
         let result;
 
         for(let refer_card of cards) {
             const box = refer_card.getBoundingClientRect();
-            const boxCenterY = box.y + box.height / 2;
+            const boxCenterX = box.x + box.width / 2;
 
-            if(posY >= boxCenterY) result = refer_card;
+            if(posX >= boxCenterX) result = refer_card;
         }
 
         return result;
     }
 }
 
-setInterval(funcTest, 15000)
+setInterval(funcTeste, 5000)
