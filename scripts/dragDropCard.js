@@ -1,39 +1,43 @@
 function funcTeste() {
     const boxContainer = document.querySelectorAll(".box-container");
 
-    document.addEventListener("dragstart", (even) => {
-        even.target.classList.add("dragging")
-    });
+    const cardd = document.querySelector(".card");
 
-    document.addEventListener("dragend", (even) => {
-        even.target.classList.remove("dragging")
-    });
+    cardd.forEach((dodo) => {
+        dodo.addEventListener("dragstart", (even) => {
+            even.target.classList.add("isdragging")
+        });
+    
+        dodo.addEventListener("dragend", (even) => {
+            even.target.classList.remove("isdragging")
+        });
+    })
 
-    boxContainer.forEach((item) => {
-        item.addEventListener("dragover", (even) => {
-            const dragging = document.querySelector(".dragging");
-            const applyAfter = getNewPosition(item, even.clientX);
+    boxContainer.forEach((item2) => {
+        item2.addEventListener("dragover", (even) => {
+            const dragging2 = document.querySelector(".isdragging");
+            const applyAfter2 = getNewPosition2(item2, even.clientX);
 
-            if(applyAfter) {
-                applyAfter.insertAdjacentElement("afterend", dragging);
+            if(applyAfter2) {
+                applyAfter2.insertAdjacentElement("afterend", dragging2);
             } else {
-                item.prepend(dragging)
+                item2.prepend(dragging2)
             }
         });
     });
 
-    function getNewPosition(column, posX) {
-        const cards = column.querySelectorAll(".task-box:not(.dragging)");
-        let result;
+    function getNewPosition2(row, posX) {
+        const cards = row.querySelectorAll(".card:not(.isdragging)");
+        let result2;
 
         for(let refer_card of cards) {
-            const box = refer_card.getBoundingClientRect();
-            const boxCenterX = box.x + box.width / 2;
+            const box2 = refer_card.getBoundingClientRect();
+            const boxCenterX = box2.x + box2.width / 2;
 
-            if(posX >= boxCenterX) result = refer_card;
+            if(posX >= boxCenterX) result2 = refer_card;
         }
 
-        return result;
+        return result2;
     }
 }
 

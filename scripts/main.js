@@ -26,6 +26,7 @@ class CardList {
 
         this.cardListElement = document.createElement('div');
         this.cardListElement.classList.add("card");
+        this.cardListElement.draggable = true;
 
         this.spanTitle = document.createElement("span");
         this.spanTitle.classList.add("title");
@@ -37,7 +38,6 @@ class CardList {
 
         this.ul = document.createElement('ul');
         this.ul.classList.add("box-list");
-        this.ul.draggable = true;
 
         this.input = document.createElement('input');
         this.input.placeholder = "Adicionar task..."
