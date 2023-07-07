@@ -28,12 +28,15 @@ class CardList {
         this.cardListElement.classList.add("card");
 
         this.spanTitle = document.createElement("span");
-        this.spanTitle.classList.add("title");
+        this.spanTitle.classList.add("title");  
 
         this.div0 = document.createElement("div");
 
         this.p1 = document.createElement("p");
         this.p1.innerText = this.title;
+
+        this.iconDelete = document.createElement("i");
+        this.iconDelete.className = "fa-solid fa-xmark";
 
         this.ul = document.createElement('ul');
         this.ul.classList.add("box-list");
@@ -49,6 +52,7 @@ class CardList {
         // append elements
 
         this.spanTitle.append(this.p1);
+        this.spanTitle.append(this.iconDelete);
 
         this.div0.append(this.input);
         this.div0.append(this.button);
@@ -65,6 +69,16 @@ class CardList {
                 this.input.value = "";
             }
         });
+
+        this.iconDelete.addEventListener("click", () => {
+            this.deleteCard.call(this)
+        })
+    }
+
+    deleteCard() {
+        this.cardListElement.remove();
+        const i = this.cardArray.indexOf(this);
+        this.cardArray.splice(i, 1);
     }
 }
 
@@ -94,7 +108,7 @@ class Card {
         this.p2.innerText = this.state.text;
 
         this.deleteButton = document.createElement('button');
-        this.deleteButton.innerText = "X";
+        this.deleteButton.className = "fa-solid fa-xmark"
 
         // append elements
 
@@ -171,7 +185,6 @@ class Card {
         // aad cilck events
 
         this.modalContainer.addEventListener('click', (event) => {
-            console.log(event.target);
             if(event.target.classList.contains("modalContainer")) {
                 this.modalContainer.remove();
             }
@@ -286,6 +299,15 @@ class EditableText {
 
         this.input.select();
     }
+    deleteComment() {
+        this.div.remove();
+        if (Array.isArray(this.place)) {
+            const i = this.place.indexOf(this);
+            if (i !== -1) {
+                this.place.splice(i, 1);
+            }
+        }
+    }
 }
 
 class Comment{
@@ -293,16 +315,34 @@ class Comment{
         this.text = text;
         this.place = place;
         this.card = card;
+
         this.render();
     }
 
     render(){
+
+        // cria elementos
+
         this.div = document.createElement('div');
         this.div.className = "comment";
-        this.div.innerText = this.text;
+
+        this.p3 = document.createElement("p");
+        this.p3.innerText = this.text;
+
+        this.commentDelete = document.createElement("i");
+        this.commentDelete.className = "fa-solid fa-xmark";
         
+        this.div.append(this.p3);
+        this.div.append(this.commentDelete);
+
         this.place.append(this.div);
+
+        this.commentDelete.addEventListener("click", () => {
+            this.deleteComment.call(this);
+        });
     }
+
+
 }
 
 // ---------------------------------------------------------------------------
