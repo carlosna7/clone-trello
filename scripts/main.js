@@ -26,7 +26,6 @@ class CardList {
 
         this.cardListElement = document.createElement('div');
         this.cardListElement.classList.add("card");
-        this.cardListElement.draggable = true;
 
         this.spanTitle = document.createElement("span");
         this.spanTitle.classList.add("title");
