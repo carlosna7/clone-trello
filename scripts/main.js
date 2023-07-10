@@ -218,6 +218,49 @@ class Card {
     }
 }
 
+
+
+class Comment{
+    constructor(text, place, card){
+        this.text = text;
+        this.place = place;
+        this.card = card;
+
+        this.render();
+    }
+
+    render(){
+
+        // cria elementos
+
+        this.div = document.createElement('div');
+        this.div.className = "comment";
+
+        this.p3 = document.createElement("p");
+        this.p3.innerText = this.text;
+
+        this.commentDelete = document.createElement("i");
+        this.commentDelete.className = "fa-solid fa-xmark";
+        
+        this.div.append(this.p3);
+        this.div.append(this.commentDelete);
+
+        this.place.append(this.div);
+
+        this.commentDelete.addEventListener("click", () => {
+            this.deleteComment.call(this);
+        });
+    }
+
+    deleteComment() {
+        this.div.remove();
+        const i = this.card.state.comments.indexOf(this.text);
+        if(i > -1) {
+            this.card.state.comments.splice(i, 1)
+        }
+    }
+}
+
 class EditableText {
     constructor(text, place, card, property, typeOfInput) {
 
@@ -299,50 +342,6 @@ class EditableText {
 
         this.input.select();
     }
-    deleteComment() {
-        this.div.remove();
-        if (Array.isArray(this.place)) {
-            const i = this.place.indexOf(this);
-            if (i !== -1) {
-                this.place.splice(i, 1);
-            }
-        }
-    }
-}
-
-class Comment{
-    constructor(text, place, card){
-        this.text = text;
-        this.place = place;
-        this.card = card;
-
-        this.render();
-    }
-
-    render(){
-
-        // cria elementos
-
-        this.div = document.createElement('div');
-        this.div.className = "comment";
-
-        this.p3 = document.createElement("p");
-        this.p3.innerText = this.text;
-
-        this.commentDelete = document.createElement("i");
-        this.commentDelete.className = "fa-solid fa-xmark";
-        
-        this.div.append(this.p3);
-        this.div.append(this.commentDelete);
-
-        this.place.append(this.div);
-
-        this.commentDelete.addEventListener("click", () => {
-            this.deleteComment.call(this);
-        });
-    }
-
-
 }
 
 // ---------------------------------------------------------------------------
