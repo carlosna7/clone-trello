@@ -8,8 +8,13 @@
     color: black;
 }
 
+:root {
+    --main-color: #dbf6fe;
+    --second-color: #fee9e9;
+}
+
 header {
-    background: #fee9e9;
+    background: var(--second-color);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -25,12 +30,40 @@ header h1 {
     color: black;
 }
 
+#colorSelector {
+    outline: none;
+    border: none;
+    border-radius: 50%;
+    padding: 30px;
+    color: black;
+    font-size: 3.5rem;
+    background: transparent;
+    cursor: pointer;
+}
+
+/* .dragging {
+    scale: 1.05;
+    background-color: #003b43;
+    color: white;
+    opacity: 0.5;
+} */
+
 /* --------------------------------------------- */
 
 section {
     /* background-color: #2a2a2a; */
-    background-color: #dbf6fe;
+    background-color: var(--main-color);
     height: 100vh;
+}
+
+.main-container .bgChange {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    position: fixed;
+    bottom: 2rem;
+    left: 2rem;
+    width: 100%;
 }
 
 .task-container {
@@ -142,14 +175,6 @@ section {
     cursor: pointer;
 }
 
-.dragging {
-    scale: 1.05;
-    background-color: #003b43;
-    color: white;
-    /* opacity: 0.5; */
-}
-
-
 /* --------------------------------------------------------------------- */
 
 
@@ -169,7 +194,7 @@ button {
     z-index: 11;
 }
 
-.modalContainer .menu { /* modal */
+.modalContainer .modal { /* modal */
     top: 0;
     left: 0;
     background-color: #ededed;
@@ -184,24 +209,24 @@ button {
     gap: 1rem;
 }
 
-.modalContainer .menu .menuTitle {
+.modalContainer .modal .modalTitle {
     font-weight: bold;
     font-size: 1.5rem;
 }
 
-.modalContainer .menu .menuTitle input:focus {
+.modalContainer .modal .modalTitle input:focus {
     background: #fff;
     border: none;
     outline: none;
     border-radius: 7px;
 }
 
-.modalContainer .menu .menuDescription {
+.modalContainer .modal .modalDescription {
     margin-bottom: 2em;
     line-height: 1.5em;
 }
 
-.modalContainer .menu .menuDescription textarea {
+.modalContainer .modal .modalDescription textarea {
     width: 100%;
     height: 5rem;
     padding: 0.5rem;
@@ -213,7 +238,7 @@ button {
     resize: none;
 }
 
-.modalContainer .menu .menuDescription button {
+.modalContainer .modal .modalDescription button {
     background-color: black;
     color: white;
     border: none;
@@ -222,7 +247,7 @@ button {
     margin-top: 0.5em;
 }
 
-.modalContainer .menu .modal-btns input {
+.modalContainer .modal .modal-btns .commentsInput {
     margin-right: 1rem;
     border: none;
     border-bottom: 1px solid black;
@@ -230,11 +255,11 @@ button {
     background: transparent;
 }
 
-.modalContainer .menu .modal-btns input:focus {
+.modalContainer .modal .modal-btns .commentsInput:focus {
     outline: none;
 }
 
-.modalContainer .menu .modal-btns button {
+.modalContainer .modal .modal-btns .commentsButton {
     background-color: black;
     color: white;
     border: none;
@@ -244,13 +269,13 @@ button {
     cursor: pointer;
 }
 
-.modalContainer .menu .menuComments {
+.modalContainer .modal .menuComments {
     display: flex;
     flex-direction: column;
     gap: .5rem;
 }
 
-.modalContainer .menu .menuComments div {
+.modalContainer .modal .menuComments div {
     border-radius: 5px;
     background: #c4c4c4;
     padding: 0.5rem .5rem;
@@ -261,7 +286,7 @@ button {
     align-items: center;
 }
 
-.modalContainer .menu .menuComments div i {
+.modalContainer .modal .menuComments div i {
     font-size: 1.2rem;
     cursor: pointer;
 }

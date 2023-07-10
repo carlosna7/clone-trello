@@ -12,7 +12,7 @@ class CardList {
 
     addCard() {
         const text = this.input.value;
-        this.cardArray.push(new Card(text, this.ul, this))
+        this.cardArray.push(new Task(text, this.ul, this))
     }
 
     render() {
@@ -82,7 +82,7 @@ class CardList {
     }
 }
 
-class Card {
+class Task {
     constructor(text, place, todoList){
 
         this.place = place;
@@ -143,26 +143,24 @@ class Card {
         this.modalContainer = document.createElement("div");
         this.modalContainer.classList.add("modalContainer");
 
-        this.menu = document.createElement("div");
-        this.menu.classList.add("menu");
+        this.modal = document.createElement("div");
+        this.modal.classList.add("modal");
 
-        this.menuTitle = document.createElement("div");
-        this.menuTitle.classList.add("menuTitle");
+        this.modalTitle = document.createElement("div");
+        this.modalTitle.classList.add("modalTitle");
 
-        this.menuDescription = document.createElement("div");
-        this.menuDescription.classList.add("menuDescription");
+        this.modalDescription = document.createElement("div");
+        this.modalDescription.classList.add("modalDescription");
 
         this.modalBtns = document.createElement("div")
         this.modalBtns.classList.add("modal-btns")
 
         this.commentsInput = document.createElement("input");
         this.commentsInput.classList.add("commentsInput");
-        this.commentsInput.classList.add("comment");
         this.commentsInput.placeholder = "Escreva um comentário...";
 
         this.commentsButton = document.createElement('button');
         this.commentsButton.classList.add("commentsButton");
-        this.commentsButton.classList.add("btn-save");
         this.commentsButton.innerText = "+";
 
         this.menuComments = document.createElement("div");
@@ -172,15 +170,15 @@ class Card {
 
         taskContainer.append(this.modalContainer)
         
-        this.modalContainer.append(this.menu);
+        this.modalContainer.append(this.modal);
 
         this.modalBtns.append(this.commentsInput);
         this.modalBtns.append(this.commentsButton);
 
-        this.menu.append(this.menuTitle);
-        this.menu.append(this.menuDescription);
-        this.menu.append(this.modalBtns)
-        this.menu.append(this.menuComments);
+        this.modal.append(this.modalTitle);
+        this.modal.append(this.modalDescription);
+        this.modal.append(this.modalBtns)
+        this.modal.append(this.menuComments);
 
         // aad cilck events
 
@@ -198,8 +196,8 @@ class Card {
             }
         });
 
-        this.editDescription = new EditableText(this.state.description, this.menuDescription, this, "description", "textarea");
-        this.editTitle = new EditableText(this.state.text, this.menuTitle, this, "text", "input");
+        this.editDescription = new EditableText(this.state.description, this.modalDescription, this, "description", "textarea");
+        this.editTitle = new EditableText(this.state.text, this.modalTitle, this, "text", "input");
         
         this.renderComments();
     }
@@ -305,7 +303,6 @@ class EditableText {
         this.input.value = oldText;
         this.saveButton.innerText = "Salvar";
         this.saveButton.className = "btn-save";
-        this.input.classList.add("comment");
 
         this.saveButton.addEventListener("click", () => {
             this.text = this.input.value;
@@ -337,7 +334,6 @@ class EditableText {
 
         if(this.typeOfInput == "textarea") {
             this.div.append(this.saveButton)
-
         };
 
         this.input.select();
