@@ -9,28 +9,18 @@
 }
 
 :root {
-    --main-theme-color: #dbf6fe;
-    --second-theme-color: #fee9e9;
-
-    --main-dark-theme-color: #c6c6c6;
-    --second-dark-theme-color: #383838;
-
-    /* --black: #000;
-    --white: #fff;
-    --grey: #ededed; */
-
-    --main-yellow-theme-color: #fffed3;
-    --second-yellow-theme-color: #f9f33c;
-
-    --main-red-theme-color: #ffe6e6;
-    --second-red-theme-color: #ff5151;
-
-    --main-blue-theme-color: #cde8ff;
-    --second-blue-theme-color: #29adff;
+    --main-theme-color: #ffffff;
+    --second-theme-color: #d8d8d8;
 
     --black: #000;
-    --white: #fff;
-    --grey: #ededed;
+    --white: #ededed;
+    --grey: #d8d8d8;
+
+    /* criar cor par os botões separadamente */
+}
+
+#theme-hide {
+    display: none;
 }
 
 /* .dragging {
@@ -61,6 +51,16 @@
 
 .header i {
     font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.header i:hover {
+    scale: 1.1;
+    transition: .3s;
+}
+
+.header i:not(hover){
+    transition: .4s;
 }
 
 .header .theme {
@@ -68,7 +68,7 @@
     justify-content: space-between;
     flex-direction: column;
     position: absolute;
-    background: var(--grey);
+    background: #858585;
     right: 5rem;
     top: 4rem;
     width: 250px;
@@ -179,6 +179,7 @@ section {
     border: none;
     font-size: 1.2rem;
     cursor: pointer;
+    background: none;
 }
 
 .task-container .box-container .card div {
