@@ -70,9 +70,20 @@ class CardList {
             }
         });
 
+        this.input.addEventListener("keypress", (evv) => {
+            if(evv.key === 'Enter') {
+                evv.preventDefault();
+
+                if(this.input.value != ""){
+                    this.addCard.call(this);
+                    this.input.value = "";
+                }
+            }
+        });
+
         this.iconDelete.addEventListener("click", () => {
             this.deleteCard.call(this)
-        })
+        });
     }
 
     deleteCard() {
@@ -196,6 +207,18 @@ class Task {
             }
         });
 
+        this.commentsInput.addEventListener("keypress", (e) => {
+            if(e.key === 'Enter') {
+                e.preventDefault();
+
+                if(this.commentsInput.value != "") {
+                    this.state.comments.push(this.commentsInput.value);
+                    this.renderComments();
+                    this.commentsInput.value = "";
+                }
+            } 
+        })
+
         this.editDescription = new EditableText(this.state.description, this.modalDescription, this, "description", "textarea");
         this.editTitle = new EditableText(this.state.text, this.modalTitle, this, "text", "input");
         
@@ -316,7 +339,7 @@ class EditableText {
         });
 
         function clickSaveButton(evento, objeto){
-            if(evento.keyCode === 13 ) {
+            if(evento.key === 'Enter') {
                 // 13 keyCode Enter key
                 evento.preventDefault();
                 // Trigger the button element with a click
@@ -351,3 +374,14 @@ addTodoListButton.addEventListener("click", () => {
     addTodoListInput.value = "";
    }
 });
+
+addTodoListInput.addEventListener("keypress", (eve) => {
+    if(eve.key === 'Enter') {
+        eve.preventDefault();
+
+        if(addTodoListInput.value.trim() != ""){
+            new CardList(taskContainer, addTodoListInput.value);
+            addTodoListInput.value = "";
+           }
+    }
+})
