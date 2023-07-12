@@ -20,27 +20,47 @@ function changeTheme(theme) {
 
     switch (theme) {
         case 'claro':
-            root.style.setProperty('--main-theme-color', '#fff');
-            root.style.setProperty('--second-theme-color', '#d8d8d8');
+            root.style.setProperty('--bg-theme-color', '#fff');
+            root.style.setProperty('--main-theme-color', '#afe0ff');
             root.style.setProperty('--black', '#000');
             root.style.setProperty('--white', '#ededed');
             root.style.setProperty('--grey', '#d8d8d8');
+            root.style.setProperty('--white-card', '#f7f7f7');
+            root.style.setProperty('--font', '#000');
             break;
         case 'escuro':
-            root.style.setProperty('--main-theme-color', '#c6c6c6');
-            root.style.setProperty('--second-theme-color', '#383838');
+            root.style.setProperty('--bg-theme-color', '#bfbfbf');
+            root.style.setProperty('--main-theme-color', '#000');
+            root.style.setProperty('--grey', '#777');
+            root.style.setProperty('--white-card', '#232323');
+            root.style.setProperty('--font', '#efefef');
             break;
         case 'amarelo':
-            root.style.setProperty('--main-theme-color', '#fffed3');
-            root.style.setProperty('--second-theme-color', '#f9f33c');
+            root.style.setProperty('--bg-theme-color', '#fffed3');
+            root.style.setProperty('--main-theme-color', '#f9f33c');
+            root.style.setProperty('--black', '#000');
+            root.style.setProperty('--white', '#ededed');
+            root.style.setProperty('--grey', '#d8d8d8');
+            root.style.setProperty('--white-card', '#f7f7f7');
+            root.style.setProperty('--font', '#000');
             break;
         case 'vermelho':
-            root.style.setProperty('--main-theme-color', '#ffe6e6');
-            root.style.setProperty('--second-theme-color', '#ff5151');
+            root.style.setProperty('--bg-theme-color', '#ffe6e6');
+            root.style.setProperty('--main-theme-color', '#ff2d2d');
+            root.style.setProperty('--black', '#000');
+            root.style.setProperty('--white', '#ededed');
+            root.style.setProperty('--grey', '#d8d8d8');
+            root.style.setProperty('--white-card', '#fff');
+            root.style.setProperty('--font', '#000');
             break;
-        case 'azul':
-            root.style.setProperty('--main-theme-color', '#cde8ff');
-            root.style.setProperty('--second-theme-color', '#29adff');
+        case 'verde':
+            root.style.setProperty('--bg-theme-color', '#ddffe3');
+            root.style.setProperty('--main-theme-color', '#00f127');
+            root.style.setProperty('--black', '#000');
+            root.style.setProperty('--white', '#ededed');
+            root.style.setProperty('--grey', '#d8d8d8');
+            root.style.setProperty('--white-card', '#fff');
+            root.style.setProperty('--font', '#000');
             break;
         default:
             break;
@@ -57,4 +77,4 @@ tema1.addEventListener('click', () => changeTheme('claro'));
 tema2.addEventListener('click', () => changeTheme('escuro'));
 tema3.addEventListener('click', () => changeTheme('amarelo'));
 tema4.addEventListener('click', () => changeTheme('vermelho'));
-tema5.addEventListener('click', () => changeTheme('azul'));
+tema5.addEventListener('click', () => changeTheme('verde'));

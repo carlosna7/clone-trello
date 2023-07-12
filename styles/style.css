@@ -9,13 +9,14 @@
 }
 
 :root {
-    --main-theme-color: #ffffff;
-    --second-theme-color: #d8d8d8;
+    --bg-theme-color: #ffffff;
+    --main-theme-color: #afe0ff;
 
     --black: #000;
     --white: #ededed;
     --grey: #d8d8d8;
-
+    --white-card: #f7f7f7;
+    --font: #000;
     /* criar cor par os botões separadamente */
 }
 
@@ -33,7 +34,7 @@
 /* --------------------------------------------- */
 
 .header {
-    background: var(--second-theme-color);
+    background: var(--main-theme-color);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -46,11 +47,12 @@
 }
 
 .header h1 {
-    color: var(--black);
+    color: var(--font);
 }
 
 .header i {
     font-size: 1.5rem;
+    color: var(--font);
     cursor: pointer;
 }
 
@@ -68,7 +70,7 @@
     justify-content: space-between;
     flex-direction: column;
     position: absolute;
-    background: #858585;
+    background: #858585; /* mudar */
     right: 5rem;
     top: 4rem;
     width: 250px;
@@ -83,9 +85,14 @@
     align-items: center;
 }
 
+.header .theme .theme-title h2 {
+    color: var(--font);
+}
+
 .header .theme .theme-title i {
     position: absolute;
     right: 1rem;
+    color: var(--font);
     font-size: 1.2rem;
     cursor: pointer;
 }
@@ -95,6 +102,10 @@
     align-items: center;
     gap: 1.5rem;
     margin: 0 2rem;
+}
+
+.header .theme .tema p {
+    color: var(--font);
 }
 
 .header .theme .tema img {
@@ -114,18 +125,8 @@
 /* --------------------------------------------- */
 section {
     /* background-color: #2a2a2a; */
-    background-color: var(--main-theme-color);
+    background-color: var(--bg-theme-color);
     height: 100vh;
-}
-
-.main-container .bgChange {
-    display: flex;
-    align-items: center;
-    gap: 3rem;
-    position: fixed;
-    bottom: 2rem;
-    left: 2rem;
-    width: 100%;
 }
 
 .task-container {
@@ -144,10 +145,11 @@ section {
 .task-container .box-container .card {
     display: flex;
     flex-direction: column;
-    background-color: var(--white);
+    background-color: var(--white-card);
     width: 300px; height: 100%;
     border-radius: 12px;
     padding: 1rem;
+    box-shadow: 7px 7px 10px 3px rgba(0,0,0,0.1);
 }
 
 .task-container .box-container .card .title {
@@ -156,9 +158,14 @@ section {
     padding: 0rem 1rem;
 }
 
+.task-container .box-container .card .title p {
+    color: var(--font);
+}
+
 .task-container .box-container .card .title i {
     font-size: 1.2rem;
     cursor: pointer;
+    color: var(--font);
 }
 
 .task-container .box-container .card .box-list {
@@ -175,11 +182,16 @@ section {
     margin-bottom: 1rem;
 }
 
-.task-container .box-container .card .box-list li button {
+.task-container .box-container .card .box-list li p {
+    color: var(--font);
+}
+
+button {
     border: none;
     font-size: 1.2rem;
     cursor: pointer;
     background: none;
+    color: var(--font);
 }
 
 .task-container .box-container .card div {
@@ -189,23 +201,29 @@ section {
 
 .task-container .box-container .card .task-title {
     border: none;
-    border-bottom: 2px solid black;
+    border-bottom: 2px solid var(--font);
     font-size: 1rem;
     background: transparent;
     width: 80%;
 }
 
+.task-container .box-container .card .task-title::placeholder {
+    color: var(--font);
+}
+
 .task-container .box-container .card .task-title:focus {
     outline: none;
+    color: var(--font);
 }
 
 .task-container .box-container .card .add-task-btn {
-    background-color: var(--second-theme-color);
+    background-color: var(--main-theme-color);
     border: none;
     font-size: 1.5rem;
     padding: .1rem .7rem;
     border-radius: 100%;
     cursor: pointer;
+    color: var(--font);
 }
 
 /* --------------------------------------------------------------- */
@@ -225,12 +243,16 @@ section {
     width: 85%;
 }
 
+.task-container .add-card .card-title::placeholder {
+    color: var(--black);
+}
+
 .task-container .add-card .card-title:focus {
     outline: none;
 }
 
 .task-container .add-card .add-card-btn {
-    background-color: var(--second-theme-color);
+    background-color: var(--main-theme-color);
     border: none;
     font-size: 1.5rem;
     padding: .1rem .7rem;
@@ -251,7 +273,7 @@ button {
     position: absolute;
     top: 0;
     left: 0;
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(0, 0, 0, 0.5);
     width: 100%;
     height: 100%;
     z-index: 11;
@@ -260,7 +282,7 @@ button {
 .modalContainer .modal { /* modal */
     top: 0;
     left: 0;
-    background-color: var(--white);
+    background-color: var(--white-card);
     width: 500px;
     min-height: 300px;
     margin: auto;
@@ -276,6 +298,10 @@ button {
     font-size: 1.5rem;
 }
 
+.modalContainer .modal .modalTitle p {
+    color: var(--font);
+}
+
 .modalContainer .modal .modalTitle input:focus {
     background: var(--white);
     border: none;
@@ -288,6 +314,10 @@ button {
     line-height: 1.5em;
 }
 
+.modalContainer .modal .modalDescription p {
+    color: var(--font);
+}
+
 .modalContainer .modal .modalDescription textarea {
     width: 100%;
     height: 5rem;
@@ -295,35 +325,42 @@ button {
     font-size: 1rem;
     background-color: transparent;
     border-radius: 5px;
-    border: 1px solid black;
+    border: 1px solid var(--font);
     outline: none;
     resize: none;
+    color: var(--font);
 }
 
 .modalContainer .modal .modalDescription button {
-    background-color: var(--black);
-    color: var(--white);
+    background-color: var(--main-theme-color);
+    color: var(--font);
     border: none;
-    border-radius: 4px;
-    padding: 0.5em;
+    border-radius: 7px;
+    padding: .3rem .6rem;
     margin-top: 0.5em;
+    font-size: 1rem;
 }
 
 .modalContainer .modal .modal-btns .commentsInput {
     margin-right: 1rem;
     border: none;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid var(--font);
     font-size: .8rem;
     background: transparent;
 }
 
+.modalContainer .modal .modal-btns .commentsInput::placeholder {
+    color: var(--font);
+}
+
 .modalContainer .modal .modal-btns .commentsInput:focus {
     outline: none;
+    color: var(--font);
 }
 
 .modalContainer .modal .modal-btns .commentsButton {
-    background-color: var(--black);
-    color: var(--white);
+    background-color: var(--main-theme-color);
+    color: var(--font);
     border: none;
     font-size: 1rem;
     padding: .1rem .55rem;
