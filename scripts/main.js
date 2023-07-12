@@ -1,3 +1,26 @@
+const addTodoListInput = document.querySelector(".card-title");
+const addTodoListButton = document.querySelector(".add-card-btn");
+
+addTodoListButton.addEventListener("click", () => {
+   if(addTodoListInput.value.trim() != ""){
+    new CardList(taskContainer, addTodoListInput.value);
+    addTodoListInput.value = "";
+   }
+});
+
+addTodoListInput.addEventListener("keypress", (eve) => {
+    if(eve.key === 'Enter') {
+        eve.preventDefault();
+
+        if(addTodoListInput.value.trim() != ""){
+            new CardList(taskContainer, addTodoListInput.value);
+            addTodoListInput.value = "";
+           }
+    }
+})
+
+// ---------------------------------------------------------------------------
+
 const taskContainer = document.querySelector(".box-container");
 
 class CardList {
@@ -5,19 +28,21 @@ class CardList {
 
         this.place = place;
         this.title = title;
-        this.cardArray = [];
+        this.taskArray = [];
 
         this.render();
     }
 
     addCard() {
         const text = this.input.value;
-        this.cardArray.push(new Task(text, this.ul, this))
+        this.taskArray.push(new Task(text, this.ul, this))
+        console.log("teste02")
     }
 
     render() {
         this.createCardListElement();
         this.place.append(this.cardListElement);
+        console.log("teste01")
     }
 
     createCardListElement() {
@@ -88,8 +113,6 @@ class CardList {
 
     deleteCard() {
         this.cardListElement.remove();
-        const i = this.cardArray.indexOf(this);
-        this.cardArray.splice(i, 1);
     }
 }
 
@@ -143,8 +166,6 @@ class Task {
 
     deleteTask() {
         this.task.remove();
-        const i = this.todoList.cardArray.indexOf(this);
-        this.todoList.cardArray.splice(i, 1);
     }
 
     viewMenu() {
@@ -362,26 +383,3 @@ class EditableText {
         this.input.select();
     }
 }
-
-// ---------------------------------------------------------------------------
-
-const addTodoListInput = document.querySelector(".card-title");
-const addTodoListButton = document.querySelector(".add-card-btn");
-
-addTodoListButton.addEventListener("click", () => {
-   if(addTodoListInput.value.trim() != ""){
-    new CardList(taskContainer, addTodoListInput.value);
-    addTodoListInput.value = "";
-   }
-});
-
-addTodoListInput.addEventListener("keypress", (eve) => {
-    if(eve.key === 'Enter') {
-        eve.preventDefault();
-
-        if(addTodoListInput.value.trim() != ""){
-            new CardList(taskContainer, addTodoListInput.value);
-            addTodoListInput.value = "";
-           }
-    }
-})
