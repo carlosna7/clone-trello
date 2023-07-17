@@ -38,12 +38,21 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1.5rem 7%;
+    padding: 1.5rem 7rem;
     border-bottom: var(--border);
     position: fixed;
     top: 0; left: 0; right: 0;
     z-index: 10;
     height: 5rem;
+}
+.header .box1 {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.header .box1 img {
+    height: 4vmax;
 }
 
 .header h1 {
@@ -71,8 +80,8 @@
     flex-direction: column;
     position: absolute;
     background: #858585; /* mudar */
-    right: 5rem;
-    top: 4rem;
+    right: 6rem;
+    top: 6rem;
     width: 250px;
     height: 450px;
     border-radius: 15px;
