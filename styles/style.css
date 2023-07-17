@@ -45,6 +45,7 @@
     z-index: 10;
     height: 5rem;
 }
+
 .header .box1 {
     display: flex;
     align-items: center;
@@ -52,7 +53,15 @@
 }
 
 .header .box1 img {
-    height: 4vmax;
+    height: 40px;
+}
+
+.header .box1 #logoLightHide{
+    display: none;
+}
+
+.header .box1 #logoDarkHide{
+    display: none;
 }
 
 .header h1 {
