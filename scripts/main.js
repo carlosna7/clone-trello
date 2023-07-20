@@ -1,27 +1,65 @@
+const taskContainer = document.querySelector(".box-container");
 const addTodoListInput = document.querySelector(".card-title");
 const addTodoListButton = document.querySelector(".add-card-btn");
 
+const textItem = addTodoListInput.value.trim();
+
+let dataBase = JSON.parse(localStorage.getItem("dataB")) || [];
+
+function renderSavedTasks() {
+    dataBase.forEach((textItem) => {
+        const cardList = new CardList(taskContainer, textItem);
+    });
+}
+
+
 addTodoListButton.addEventListener("click", () => {
-   if(addTodoListInput.value.trim() != ""){
-    new CardList(taskContainer, addTodoListInput.value);
-    addTodoListInput.value = "";
-   }
+    const textItem = addTodoListInput.value.trim();
+    const vazio = "Nome não definido!";
+
+    if (textItem !== "") {
+        // Cria e adiciona a tarefa na lista
+        const cardList = new CardList(taskContainer, textItem);
+
+        // Adiciona a tarefa ao banco de dados e salva no localStorage
+        dataBase.push(textItem);
+        localStorage.setItem("dataB", JSON.stringify(dataBase));
+
+        addTodoListInput.value = "";
+    } else {
+        // Cria e adiciona a tarefa na lista
+        const cardList = new CardList(taskContainer, vazio);
+
+        // Adiciona a tarefa ao banco de dados e salva no localStorage
+        dataBase.push(vazio);
+        localStorage.setItem("dataB", JSON.stringify(dataBase));
+
+        addTodoListInput.value = "";
+    }
 });
 
+window.onload = function() {
+    renderSavedTasks();
+};
+
 addTodoListInput.addEventListener("keypress", (eve) => {
+    const textItem = addTodoListInput.value.trim();
+
     if(eve.key === 'Enter') {
         eve.preventDefault();
 
-        if(addTodoListInput.value.trim() != ""){
-            new CardList(taskContainer, addTodoListInput.value);
-            addTodoListInput.value = "";
-           }
+        // Cria e adiciona a tarefa na lista
+        const cardList = new CardList(taskContainer, textItem);
+
+        // Adiciona a tarefa ao banco de dados e salva no localStorage
+        dataBase.push(textItem);
+        localStorage.setItem("dataB", JSON.stringify(dataBase));
+
+        addTodoListInput.value = "";        
     }
-})
+});
 
 // ---------------------------------------------------------------------------
-
-const taskContainer = document.querySelector(".box-container");
 
 class CardList {
     constructor(place, title = "") {
@@ -36,13 +74,11 @@ class CardList {
     addCard() {
         const text = this.input.value;
         this.taskArray.push(new Task(text, this.ul, this))
-        console.log("teste02")
     }
 
     render() {
         this.createCardListElement();
         this.place.append(this.cardListElement);
-        console.log("teste01")
     }
 
     createCardListElement() {
@@ -107,12 +143,17 @@ class CardList {
         });
 
         this.iconDelete.addEventListener("click", () => {
-            this.deleteCard.call(this)
+            this.deleteCard(this.title)
         });
     }
 
     deleteCard() {
         this.cardListElement.remove();
+        const i = dataBase.indexOf(this.title);
+        if(i > -1) {
+            dataBase.splice(i, 1);
+            localStorage.setItem("dataB", JSON.stringify(dataBase))
+        }
     }
 }
 
