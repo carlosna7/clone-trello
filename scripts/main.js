@@ -6,7 +6,7 @@ const textItem = addTodoListInput.value.trim();
 
 let dataBase = JSON.parse(localStorage.getItem("dataB")) || [];
 
-function renderSavedTasks() {
+function renderSavedCards() {
     dataBase.forEach((textItem) => {
         const cardList = new CardList(taskContainer, textItem);
     });
@@ -38,7 +38,7 @@ addTodoListButton.addEventListener("click", () => {
 });
 
 window.onload = function() {
-    renderSavedTasks();
+    renderSavedCards();
 };
 
 addTodoListInput.addEventListener("keypress", (eve) => {
@@ -70,7 +70,7 @@ class CardList {
         this.render();
     }
 
-    addCard() {
+    addTask() {
         const text = this.input.value;
         this.taskArray.push(new Task(text, this.ul, this))
     }
@@ -124,18 +124,22 @@ class CardList {
         // add click events
 
         this.button.addEventListener("click", () => {
+            console.log("teste2")
             if(this.input.value != ""){
-                this.addCard.call(this);
+                this.addTask.call(this);
+                console.log("teste3")
                 this.input.value = "";
             }
         });
 
         this.input.addEventListener("keypress", (evv) => {
+            console.log("teste2")
             if(evv.key === 'Enter') {
                 evv.preventDefault();
 
                 if(this.input.value != ""){
-                    this.addCard.call(this);
+                    this.addTask.call(this);
+                    console.log("teste3")
                     this.input.value = "";
                 }
             }
