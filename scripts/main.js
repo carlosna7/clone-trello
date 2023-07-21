@@ -2,26 +2,26 @@ const taskContainer = document.querySelector(".box-container");
 const addTodoListInput = document.querySelector(".card-title");
 const addTodoListButton = document.querySelector(".add-card-btn");
 
-const textItem = addTodoListInput.value.trim();
+// const textItem = addTodoListInput.value.trim();
 
 let dataBase = JSON.parse(localStorage.getItem("dataB")) || [];
 
 function renderSavedCards() {
-    dataBase.forEach((textItem) => {
-        const cardList = new CardList(taskContainer, textItem);
+    dataBase.forEach((taskData) => {
+        const cardList = new CardList(taskContainer, taskData.title, taskData.tasks);
     });
 }
 
 addTodoListButton.addEventListener("click", () => {
-    const textItem = addTodoListInput.value.trim();
+    const title = addTodoListInput.value.trim();
     const vazio = "Nome não definido!";
 
-    if (textItem !== "") {
+    if (title !== "") {
         // Cria e adiciona o card na tela
-        const cardList = new CardList(taskContainer, textItem);
+        const cardList = new CardList(taskContainer, title);
 
         // Adiciona a tarefa ao banco de dados e salva no localStorage
-        dataBase.push(textItem);
+        dataBase.push({title: title, tasks: cardList.taskArray});
         localStorage.setItem("dataB", JSON.stringify(dataBase));
 
         addTodoListInput.value = "";
@@ -30,7 +30,7 @@ addTodoListButton.addEventListener("click", () => {
         const cardList = new CardList(taskContainer, vazio);
 
         // Adiciona a tarefa ao banco de dados e salva no localStorage
-        dataBase.push(vazio);
+        dataBase.push({title: vazio, tasks: cardList.taskArray});
         localStorage.setItem("dataB", JSON.stringify(dataBase));
 
         addTodoListInput.value = "";
@@ -61,23 +61,50 @@ addTodoListInput.addEventListener("keypress", (eve) => {
 // ---------------------------------------------------------------------------
 
 class CardList {
-    constructor(place, title = "") {
+    constructor(place, title = "", tasks = []) {
 
         this.place = place;
         this.title = title;
-        this.taskArray = [];
+        this.taskArray = tasks;
 
         this.render();
     }
 
-    addTask() {
-        const text = this.input.value;
-        this.taskArray.push(new Task(text, this.ul, this))
+    // addTask() {
+    //     const text = this.input.value;
+    //     this.taskArray.push(new Task(text, this.ul, this))
+    // }
+
+    addTask(text) {
+        const task = new Task(text, this.ul, this);
+        this.taskArray.push(task);
+        // console.log("Task added:", text);
+        // console.log(typeof "Task added:", text);
+        // console.log("Updated taskArray:", this.taskArray);
+        // console.log(typeof "Updated taskArray:", this.taskArray);
+        const data = {
+            title: this.title,
+            tasks: this.taskArray.map(task => task.state),
+        };
+        const i = dataBase.findIndex(item => item.title === this.title);
+        if (i > -1) {
+            dataBase[i] = data;
+            localStorage.setItem("dataB", JSON.stringify(dataBase));
+        }
     }
 
     render() {
         this.createCardListElement();
+        this.createTasksElement();
         this.place.append(this.cardListElement);
+    }
+
+    renderTasks() {
+        this.tasksElement.innerHTML = "";   
+
+        this.taskArray.forEach((task) => {
+            task.render();
+        });
     }
 
     createCardListElement() {
@@ -124,22 +151,20 @@ class CardList {
         // add click events
 
         this.button.addEventListener("click", () => {
-            console.log("teste2")
             if(this.input.value != ""){
-                this.addTask.call(this);
-                console.log("teste3")
+                this.addTask(this.input.value);
+                console.log("Updated dataBase:", dataBase);
+                console.log(typeof "Updated dataBase:", dataBase);
                 this.input.value = "";
             }
         });
 
         this.input.addEventListener("keypress", (evv) => {
-            console.log("teste2")
             if(evv.key === 'Enter') {
                 evv.preventDefault();
-
                 if(this.input.value != ""){
-                    this.addTask.call(this);
-                    console.log("teste3")
+                    this.addTask(this.input.value);
+                    console.log("Updated dataBase:", dataBase);
                     this.input.value = "";
                 }
             }
@@ -150,9 +175,15 @@ class CardList {
         });
     }
 
+    createTasksElement() {
+        this.taskArray.forEach((task) => {
+            task.render();
+        });
+    }
+
     deleteCard() {
         this.cardListElement.remove();
-        const i = dataBase.indexOf(this.title);
+        const i = dataBase.findIndex((task) => task.title === this.title);
         if(i > -1) {
             dataBase.splice(i, 1);
             localStorage.setItem("dataB", JSON.stringify(dataBase))
