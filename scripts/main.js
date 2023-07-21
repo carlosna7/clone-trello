@@ -12,13 +12,12 @@ function renderSavedTasks() {
     });
 }
 
-
 addTodoListButton.addEventListener("click", () => {
     const textItem = addTodoListInput.value.trim();
     const vazio = "Nome não definido!";
 
     if (textItem !== "") {
-        // Cria e adiciona a tarefa na lista
+        // Cria e adiciona o card na tela
         const cardList = new CardList(taskContainer, textItem);
 
         // Adiciona a tarefa ao banco de dados e salva no localStorage
@@ -27,7 +26,7 @@ addTodoListButton.addEventListener("click", () => {
 
         addTodoListInput.value = "";
     } else {
-        // Cria e adiciona a tarefa na lista
+        // Cria e adiciona o card na tela (versão para card sem nome)
         const cardList = new CardList(taskContainer, vazio);
 
         // Adiciona a tarefa ao banco de dados e salva no localStorage
