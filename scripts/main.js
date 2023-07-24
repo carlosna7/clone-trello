@@ -2,13 +2,19 @@ const taskContainer = document.querySelector(".box-container");
 const addTodoListInput = document.querySelector(".card-title");
 const addTodoListButton = document.querySelector(".add-card-btn");
 
-// const textItem = addTodoListInput.value.trim();
-
 let dataBase = JSON.parse(localStorage.getItem("dataB")) || [];
 
 function renderSavedCards() {
+    if (!Array.isArray(dataBase)) {
+        console.error("Invalid dataBase format. Clearing localStorage data.");
+        localStorage.removeItem("dataB");
+        return;
+    }
+
     dataBase.forEach((taskData) => {
-        const cardList = new CardList(taskContainer, taskData.title, taskData.tasks);
+        if (taskData.title && Array.isArray(taskData.tasks)) {
+            const cardList = new CardList(taskContainer, taskData.title, taskData.tasks);
+        }
     });
 }
 
@@ -46,16 +52,15 @@ addTodoListInput.addEventListener("keypress", (eve) => {
 
     if(eve.key === 'Enter') {
         eve.preventDefault();
-
         // Cria e adiciona a tarefa na lista
         const cardList = new CardList(taskContainer, textItem);
 
         // Adiciona a tarefa ao banco de dados e salva no localStorage
-        dataBase.push(textItem);
+        dataBase.push({title: vazio, tasks: cardList.taskArray});
         localStorage.setItem("dataB", JSON.stringify(dataBase));
 
         addTodoListInput.value = "";        
-    }
+    } 
 });
 
 // ---------------------------------------------------------------------------
@@ -70,21 +75,18 @@ class CardList {
         this.render();
     }
 
-    // addTask() {
-    //     const text = this.input.value;
-    //     this.taskArray.push(new Task(text, this.ul, this))
-    // }
-
     addTask(text) {
         const task = new Task(text, this.ul, this);
-        this.taskArray.push(task);
-        // console.log("Task added:", text);
-        // console.log(typeof "Task added:", text);
-        // console.log("Updated taskArray:", this.taskArray);
-        // console.log(typeof "Updated taskArray:", this.taskArray);
+        console.log("criei")
+        this.taskArray.push({
+            text: task.state.text,
+            description: task.state.description,
+            comments: task.state.comments
+        });
+
         const data = {
             title: this.title,
-            tasks: this.taskArray.map(task => task.state),
+            tasks: this.taskArray
         };
         const i = dataBase.findIndex(item => item.title === this.title);
         if (i > -1) {
@@ -97,14 +99,6 @@ class CardList {
         this.createCardListElement();
         this.createTasksElement();
         this.place.append(this.cardListElement);
-    }
-
-    renderTasks() {
-        this.tasksElement.innerHTML = "";   
-
-        this.taskArray.forEach((task) => {
-            task.render();
-        });
     }
 
     createCardListElement() {
@@ -176,8 +170,13 @@ class CardList {
     }
 
     createTasksElement() {
-        this.taskArray.forEach((task) => {
-            task.render();
+        if (this.taskArray.length === 0) {
+            return;
+        }
+
+        this.taskArray.forEach((taskData) => {
+            const task = new Task(taskData.text, this.ul, this);
+            // task.render(); não precisa dar render se declarar a cosnt  a task já é criada;
         });
     }
 
@@ -206,6 +205,11 @@ class Task {
     }
 
     render() {
+        this.createTaskElement();
+        this.place.append(this.task)
+    }
+
+    createTaskElement() {
 
         // create elements
 
@@ -220,8 +224,6 @@ class Task {
         this.deleteButton.className = "fa-solid fa-xmark"
 
         // append elements
-
-        this.place.append(this.task);
 
         this.task.append(this.p2);
         this.task.append(this.deleteButton);
