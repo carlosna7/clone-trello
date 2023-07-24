@@ -379,6 +379,7 @@ class EditableText {
 
         this.p = document.createElement("p");
         this.p.innerText = this.text;
+        this.p.classList.add("testeteste")
 
         // append elements
 
@@ -395,13 +396,14 @@ class EditableText {
     }
 
     showEditableTextArea() {
-        const oldText = this.text;
+        const oldText = this.text; //recebem texto do P
 
         this.input = document.createElement(this.typeOfInput);
         this.saveButton = document.createElement("button");
 
         this.p.remove();
-        this.input.value = oldText;
+        this.input.value = oldText; // texto do P igual valor do input
+
         this.saveButton.innerText = "Salvar";
         this.saveButton.className = "btn-save";
 
