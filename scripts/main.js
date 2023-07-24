@@ -77,7 +77,7 @@ class CardList {
 
     addTask(text) {
         const task = new Task(text, this.ul, this);
-        console.log("criei")
+        console.log("criei/dupliquei")
         this.taskArray.push({
             text: task.state.text,
             description: task.state.description,
@@ -176,6 +176,7 @@ class CardList {
 
         this.taskArray.forEach((taskData) => {
             const task = new Task(taskData.text, this.ul, this);
+            console.log("atualizei/dupliquei")
             // task.render(); não precisa dar render, se declarar a cosnt a task já é criada;
         });
     }
@@ -358,7 +359,90 @@ class Task {
     }
 }
 
+class EditableText {
+    constructor(text, place, card, property, typeOfInput) {
 
+        this.text = text;
+        this.place = place;
+        this.card = card;
+        this.property = property;
+        this.typeOfInput = typeOfInput;
+
+        this.render();
+    }
+
+    render() {
+
+        // create elements
+
+        this.div = document.createElement("div");
+
+        this.p = document.createElement("p");
+        this.p.innerText = this.text;
+
+        // append elements
+
+        this.div.append(this.p);
+
+        this.place.append(this.div);
+
+        // add click events
+        
+        this.p.addEventListener('click', () => {
+            this.showEditableTextArea.call(this);
+            console.log("Abriu o titulo")
+        });
+    }
+
+    showEditableTextArea() {
+        const oldText = this.text;
+
+        this.input = document.createElement(this.typeOfInput);
+        this.saveButton = document.createElement("button");
+
+        this.p.remove();
+        this.input.value = oldText;
+        this.saveButton.innerText = "Salvar";
+        this.saveButton.className = "btn-save";
+
+        this.saveButton.addEventListener("click", () => {
+            this.text = this.input.value;
+            this.card.state[this.property] = this.input.value;
+            if(this.property == "text") {
+                this.card.p2.innerText = "this.input.value"; // usar o p2 e não o p no escopo
+            }
+
+            this.div.remove();
+            this.render();
+        });
+
+        function clickSaveButton(evento, objeto){
+            if(evento.key === 'Enter') {
+                // 13 keyCode do Enter
+                evento.preventDefault();
+                // Salva o titulo alterado ao clickar no Enter
+                objeto.saveButton.click();
+                console.log("Salvou o titulo")
+            }
+              
+        }
+
+        this.input.addEventListener("keyup", (e) => {
+            if(this.typeOfInput == "input") {
+                clickSaveButton(e, this);
+            }
+        });
+
+        this.div.append(this.input);
+
+        if(this.typeOfInput == "textarea") {
+            this.div.append(this.saveButton)
+            console.log("Abriu descrição")
+        };
+
+        this.input.select();
+    }
+}
 
 class Comment{
     constructor(text, place, card){
@@ -398,86 +482,5 @@ class Comment{
         if(i > -1) {
             this.card.state.comments.splice(i, 1)
         }
-    }
-}
-
-class EditableText {
-    constructor(text, place, card, property, typeOfInput) {
-
-        this.text = text;
-        this.place = place;
-        this.card = card;
-        this.property = property;
-        this.typeOfInput = typeOfInput;
-
-        this.render();
-    }
-
-    render() {
-
-        // create elements
-
-        this.div = document.createElement("div");
-
-        this.p = document.createElement("p");
-        this.p.innerText = this.text;
-
-        // append elements
-
-        this.div.append(this.p);
-
-        this.place.append(this.div);
-
-        // add click events
-        
-        this.p.addEventListener('click', () => {
-            this.showEditableTextArea.call(this);
-        });
-    }
-
-    showEditableTextArea() {
-        const oldText = this.text;
-
-        this.input = document.createElement(this.typeOfInput);
-        this.saveButton = document.createElement("button");
-
-        this.p.remove();
-        this.input.value = oldText;
-        this.saveButton.innerText = "Salvar";
-        this.saveButton.className = "btn-save";
-
-        this.saveButton.addEventListener("click", () => {
-            this.text = this.input.value;
-            this.card.state[this.property] = this.input.value;
-            if(this.property == "text") {
-                this.card.p2.innerText = this.input.value; // usar o p2 e não o p no escopo
-            }
-
-            this.div.remove();
-            this.render();
-        });
-
-        function clickSaveButton(evento, objeto){
-            if(evento.key === 'Enter') {
-                // 13 keyCode Enter key
-                evento.preventDefault();
-                // Trigger the button element with a click
-                objeto.saveButton.click();
-              }
-        }
-
-        this.input.addEventListener("keyup", (e) => {
-            if(this.typeOfInput == "input") {
-                clickSaveButton(e, this);
-            }
-        });
-
-        this.div.append(this.input);
-
-        if(this.typeOfInput == "textarea") {
-            this.div.append(this.saveButton)
-        };
-
-        this.input.select();
     }
 }
