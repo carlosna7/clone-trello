@@ -176,7 +176,7 @@ class CardList {
 
         this.taskArray.forEach((taskData) => {
             const task = new Task(taskData.text, this.ul, this);
-            // task.render(); não precisa dar render se declarar a cosnt  a task já é criada;
+            // task.render(); não precisa dar render, se declarar a cosnt a task já é criada;
         });
     }
 
@@ -186,6 +186,26 @@ class CardList {
         if(i > -1) {
             dataBase.splice(i, 1);
             localStorage.setItem("dataB", JSON.stringify(dataBase))
+        }
+    }
+
+    deleteTask(taskText) {
+        const taskIndex = this.taskArray.findIndex((task) => task.text === taskText);
+        if (taskIndex > -1) {
+            this.taskArray.splice(taskIndex, 1);
+            this.updateDatabase();
+        }
+    }
+
+    updateDatabase() {
+        const data = {
+            title: this.title,
+            tasks: this.taskArray
+        };
+        const i = dataBase.findIndex(item => item.title === this.title);
+        if (i > -1) {
+            dataBase[i] = data;
+            localStorage.setItem("dataB", JSON.stringify(dataBase));
         }
     }
 }
@@ -243,6 +263,7 @@ class Task {
 
     deleteTask() {
         this.task.remove();
+        this.todoList.deleteTask(this.state.text);
     }
 
     viewMenu() {

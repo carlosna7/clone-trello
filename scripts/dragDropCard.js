@@ -1,14 +1,14 @@
-function funcTeste() {
+function intervalo() {
     const boxContainer = document.querySelectorAll(".box-container");
 
-    const cardd = document.querySelectorAll(".card");
+    const card = document.querySelectorAll(".card");
 
-    cardd.forEach((dodo) => {
-        cardd.addEventListener("dragstart", (even) => {
+    card.forEach(() => {
+        card.addEventListener("dragstart", (even) => {
             even.target.classList.add("isdragging")
         });
     
-        cardd.addEventListener("dragend", (even) => {
+        card.addEventListener("dragend", (even) => {
             even.target.classList.remove("isdragging")
         });
     })
@@ -41,4 +41,4 @@ function funcTeste() {
     }
 }
 
-setInterval(funcTeste, 5000)
+setInterval(intervalo, 5000)
