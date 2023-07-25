@@ -2,40 +2,41 @@ const taskContainer = document.querySelector(".box-container");
 const addTodoListInput = document.querySelector(".card-title");
 const addTodoListButton = document.querySelector(".add-card-btn");
 
+// var da localStorage (inicia array vazio)
 let dataBase = JSON.parse(localStorage.getItem("dataB")) || [];
 
+// recarregar os cards salvos no localStorage
 function renderSavedCards() {
-    if (!Array.isArray(dataBase)) {
-        console.error("Invalid dataBase format. Clearing localStorage data.");
-        localStorage.removeItem("dataB");
-        return;
-    }
-
-    dataBase.forEach((taskData) => {
-        if (taskData.title && Array.isArray(taskData.tasks)) {
-            const cardList = new CardList(taskContainer, taskData.title, taskData.tasks);
-        }
+    dataBase.forEach((cardData) => {
+        if (cardData.title) {
+            const cardList = new CardList(taskContainer, cardData.title, cardData.tasks);
+        };
     });
-}
+};
+
+// executa a função ao carregar a página
+window.onload = function() {
+    renderSavedCards();
+};
 
 addTodoListButton.addEventListener("click", () => {
-    const title = addTodoListInput.value.trim();
+    const textItem = addTodoListInput.value.trim();
     const vazio = "Nome não definido!";
 
-    if (title !== "") {
-        // Cria e adiciona o card na tela
-        const cardList = new CardList(taskContainer, title);
+    if (textItem !== "") {
+        // Cria o card
+        const cardList = new CardList(taskContainer, textItem);
 
         // Adiciona a tarefa ao banco de dados e salva no localStorage
-        dataBase.push({title: title, tasks: cardList.taskArray});
+        dataBase.push({title: textItem, tasks: cardList.taskArray});
         localStorage.setItem("dataB", JSON.stringify(dataBase));
 
         addTodoListInput.value = "";
     } else {
-        // Cria e adiciona o card na tela (versão para card sem nome)
+        // Cria o card (versão para card sem nome)
         const cardList = new CardList(taskContainer, vazio);
 
-        // Adiciona a tarefa ao banco de dados e salva no localStorage
+        // Adiciona o card ao banco de dados e salva no localStorage
         dataBase.push({title: vazio, tasks: cardList.taskArray});
         localStorage.setItem("dataB", JSON.stringify(dataBase));
 
@@ -43,19 +44,15 @@ addTodoListButton.addEventListener("click", () => {
     }
 });
 
-window.onload = function() {
-    renderSavedCards();
-};
-
 addTodoListInput.addEventListener("keypress", (eve) => {
     const textItem = addTodoListInput.value.trim();
 
     if(eve.key === 'Enter') {
         eve.preventDefault();
-        // Cria e adiciona a tarefa na lista
+        // Cria o card
         const cardList = new CardList(taskContainer, textItem);
 
-        // Adiciona a tarefa ao banco de dados e salva no localStorage
+        // Adiciona o card ao banco de dados e salva no localStorage
         dataBase.push({title: vazio, tasks: cardList.taskArray});
         localStorage.setItem("dataB", JSON.stringify(dataBase));
 
@@ -76,21 +73,23 @@ class CardList {
     }
 
     addTask(text) {
+        // cria a task
         const task = new Task(text, this.ul, this);
-        console.log("criei/dupliquei")
+        // objeto com propriedade da task que vai para o array do Card no localStorage
         this.taskArray.push({
             text: task.state.text,
-            description: task.state.description,
-            comments: task.state.comments
         });
-
+        // objeto com dados do Card
         const data = {
             title: this.title,
             tasks: this.taskArray
         };
-        const i = dataBase.findIndex(item => item.title === this.title);
+        // verifica se o item armazenado no localStorage tem o mesmo nome do Card
+        // item faz referencia ao title no localStorage
+        const i = dataBase.findIndex((item) => item.title === this.title);
         if (i > -1) {
-            dataBase[i] = data;
+            // se o card for encontrado, substituir o i pelo data com os dados da task 
+            dataBase[i] = data; 
             localStorage.setItem("dataB", JSON.stringify(dataBase));
         }
     }
@@ -103,7 +102,7 @@ class CardList {
 
     createCardListElement() {
 
-        // create elements
+        // elementos hmtl
 
         this.cardListElement = document.createElement('div');
         this.cardListElement.classList.add("card");
@@ -130,7 +129,7 @@ class CardList {
         this.button.innerText = '+';
         this.button.classList.add("add-task-btn");
 
-        // append elements
+        // elementos ligados
 
         this.spanTitle.append(this.p1);
         this.spanTitle.append(this.iconDelete);
@@ -142,13 +141,12 @@ class CardList {
         this.cardListElement.append(this.ul);
         this.cardListElement.append(this.div0);
 
-        // add click events
+        // click events
 
+        // criar task
         this.button.addEventListener("click", () => {
             if(this.input.value != ""){
                 this.addTask(this.input.value);
-                console.log("Updated dataBase:", dataBase);
-                console.log(typeof "Updated dataBase:", dataBase);
                 this.input.value = "";
             }
         });
@@ -164,23 +162,24 @@ class CardList {
             }
         });
 
+        // excluir Card
         this.iconDelete.addEventListener("click", () => {
             this.deleteCard(this.title)
         });
     }
 
+    // verifica se existe task dentor do array do Card, se sim exibe eles na tela
     createTasksElement() {
-        if (this.taskArray.length === 0) {
+        if(this.taskArray.length === 0) {
             return;
         }
 
         this.taskArray.forEach((taskData) => {
             const task = new Task(taskData.text, this.ul, this);
-            console.log("atualizei/dupliquei")
-            // task.render(); não precisa dar render, se declarar a cosnt a task já é criada;
         });
     }
 
+    // excluir os dados do Card da localStorage e da tela 
     deleteCard() {
         this.cardListElement.remove();
         const i = dataBase.findIndex((task) => task.title === this.title);
@@ -190,20 +189,22 @@ class CardList {
         }
     }
 
+    // localiza a task especifica no array e exclui os dados 
     deleteTask(taskText) {
         const taskIndex = this.taskArray.findIndex((task) => task.text === taskText);
         if (taskIndex > -1) {
             this.taskArray.splice(taskIndex, 1);
-            this.updateDatabase();
+            this.updateDatabase(); // método para atualizar os dados
         }
     }
 
+    // mesmo trecho do método addTask()
     updateDatabase() {
         const data = {
             title: this.title,
             tasks: this.taskArray
         };
-        const i = dataBase.findIndex(item => item.title === this.title);
+        const i = dataBase.findIndex((item) => item.title === this.title);
         if (i > -1) {
             dataBase[i] = data;
             localStorage.setItem("dataB", JSON.stringify(dataBase));
@@ -232,7 +233,7 @@ class Task {
 
     createTaskElement() {
 
-        // create elements
+        // elementos html
 
         this.task = document.createElement('li');
         this.task.classList.add("task-box");
@@ -244,13 +245,14 @@ class Task {
         this.deleteButton = document.createElement('button');
         this.deleteButton.className = "fa-solid fa-xmark"
 
-        // append elements
+        // elementos ligados
 
         this.task.append(this.p2);
         this.task.append(this.deleteButton);
         
-        // add click events
+        // click events
 
+        // dentro do if para não abrir o modal ao excluir
         this.task.addEventListener('click', (ev) => {
             if(ev.target != this.deleteButton){
                 this.viewMenu.call(this);
@@ -262,14 +264,16 @@ class Task {
         });
     }
 
+    // exluir task da tela (ja foi removida do array no metodo dentor do CardList)
     deleteTask() {
         this.task.remove();
         this.todoList.deleteTask(this.state.text);
     }
 
+    // modal
     viewMenu() {
 
-        // create elements
+        // elementos html
 
         this.modalContainer = document.createElement("div");
         this.modalContainer.classList.add("modalContainer");
@@ -297,7 +301,7 @@ class Task {
         this.menuComments = document.createElement("div");
         this.menuComments.classList.add("menuComments");
 
-        // append elements
+        // eleemntos ligados
 
         taskContainer.append(this.modalContainer)
         
@@ -311,7 +315,7 @@ class Task {
         this.modal.append(this.modalBtns)
         this.modal.append(this.menuComments);
 
-        // aad cilck events
+        // eventos click
 
         this.modalContainer.addEventListener('click', (event) => {
             if(event.target.classList.contains("modalContainer")) {
@@ -416,8 +420,6 @@ class EditableText {
 
             this.div.remove();
             this.render();
-
-            this.updateCard()
         });
 
         function clickSaveButton(evento, objeto){
