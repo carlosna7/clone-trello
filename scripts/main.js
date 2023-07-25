@@ -156,7 +156,6 @@ class CardList {
                 evv.preventDefault();
                 if(this.input.value != ""){
                     this.addTask(this.input.value);
-                    console.log("Updated dataBase:", dataBase);
                     this.input.value = "";
                 }
             }
@@ -317,12 +316,14 @@ class Task {
 
         // eventos click
 
+        // fechar modal
         this.modalContainer.addEventListener('click', (event) => {
             if(event.target.classList.contains("modalContainer")) {
                 this.modalContainer.remove();
             }
         });
         
+        // adicionar comentário mouseClick
         this.commentsButton.addEventListener('click', () => {
             if(this.commentsInput.value != "") {
                 this.state.comments.push(this.commentsInput.value);
@@ -331,6 +332,7 @@ class Task {
             }
         });
 
+        // adicionar comentário pressEnter
         this.commentsInput.addEventListener("keypress", (e) => {
             if(e.key === 'Enter') {
                 e.preventDefault();
@@ -343,23 +345,43 @@ class Task {
             } 
         })
 
-        this.editDescription = new EditableText(this.state.description, this.modalDescription, this, "description", "textarea");
+        // exibe o titulo do modal
         this.editTitle = new EditableText(this.state.text, this.modalTitle, this, "text", "input");
-        
+
+        // exibe a textarea no modal
+        this.editDescription = new EditableText(this.state.description, this.modalDescription, this, "description", "textarea");
+
+        // exibe os comentários no modal
         this.renderComments();
     }
 
+    // metodo de exibição dos comentários ao abrir o modal e ao criar um novo
     renderComments() {
 
+        // seleciona os comentarios do Array comments
         const currentCommentsDOM = Array.from(this.menuComments.childNodes);
 
+        // Sempre que adicionar um novo comentário remove os atuais do array para não duplicalos na exibição
+        // Os mesmos serão adicionados novamente enquanto o loop abaixo roda
         currentCommentsDOM.forEach(commentDOM => {
             commentDOM.remove();
         });
 
+        // exibe sempre que abrir o modal
+        // quando criado um novo comentário é incluido apenas o ultimo do array (o digitado), pois os anteriores são excluidos pelo loop acima
         this.state.comments.forEach(comment => {
             new Comment(comment, this.menuComments, this);
         });
+
+        // // Verifica se há algum comentário na lista
+        // if (this.state.comments.length > 0) {
+        //     // Obtém o último comentário da lista
+        //     const lastComment = this.state.comments[this.state.comments.length - 1];
+            
+        //     // Cria uma nova instância da classe "Comment" apenas para o último comentário
+        //     new Comment(lastComment, this.menuComments, this);
+        // }
+        
     }
 }
 
@@ -377,25 +399,24 @@ class EditableText {
 
     render() {
 
-        // create elements
+        // elementos criados
 
         this.div = document.createElement("div");
 
         this.p = document.createElement("p");
         this.p.innerText = this.text;
-        this.p.classList.add("testeteste")
 
-        // append elements
+        // elementos liagdos
 
         this.div.append(this.p);
 
         this.place.append(this.div);
 
-        // add click events
+        // eventos click
         
+        // evento funciona para o titulo e para a descrição, ao clickar cada um tem um retorno diferente
         this.p.addEventListener('click', () => {
             this.showEditableTextArea.call(this);
-            console.log("Abriu o titulo")
         });
     }
 
@@ -434,8 +455,10 @@ class EditableText {
         }
 
         this.input.addEventListener("keyup", (e) => {
+            console.log("teste-")
             if(this.typeOfInput == "input") {
                 clickSaveButton(e, this);
+                console.log("teste")
             }
         });
 
@@ -472,18 +495,27 @@ class Comment{
         this.commentDelete = document.createElement("i");
         this.commentDelete.className = "fa-solid fa-xmark";
         
+        // elementos ligados
+
         this.div.append(this.p3);
         this.div.append(this.commentDelete);
 
         this.place.append(this.div);
+
+        // evento click delete
 
         this.commentDelete.addEventListener("click", () => {
             this.deleteComment.call(this);
         });
     }
 
+    // remove o comentário do modal e do array onde estava armazenado
     deleteComment() {
+
+        // remove a div do comentário
         this.div.remove();
+
+        // remove o array específico do array
         const i = this.card.state.comments.indexOf(this.text);
         if(i > -1) {
             this.card.state.comments.splice(i, 1)
