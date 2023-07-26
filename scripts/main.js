@@ -49,13 +49,14 @@ addTodoListButton.addEventListener("click", () => {
 addTodoListInput.addEventListener("keypress", (eve) => {
     const textItem = addTodoListInput.value.trim();
 
-    if(eve.key === 'Enter') {
+    if(eve.key === 'Enter' && textItem !== "") {
         eve.preventDefault();
+        
         // Cria o card
         const cardList = new CardList(taskContainer, textItem);
 
         // Adiciona o card ao banco de dados e salva no localStorage
-        dataBase.push({title: vazio, tasks: cardList.taskArray});
+        dataBase.push({title: textItem, tasks: cardList.taskArray});
         localStorage.setItem("dataB", JSON.stringify(dataBase));
 
         addTodoListInput.value = "";        
