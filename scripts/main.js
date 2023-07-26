@@ -19,6 +19,7 @@ window.onload = function() {
     renderSavedCards();
 };
 
+// evento de mouse Click criar Card
 addTodoListButton.addEventListener("click", () => {
     const textItem = addTodoListInput.value.trim();
     const vazio = "Nome não definido!";
@@ -44,6 +45,7 @@ addTodoListButton.addEventListener("click", () => {
     }
 });
 
+//evento de press Enter criar Card
 addTodoListInput.addEventListener("keypress", (eve) => {
     const textItem = addTodoListInput.value.trim();
 
@@ -426,47 +428,49 @@ class EditableText {
         this.input = document.createElement(this.typeOfInput);
         this.saveButton = document.createElement("button");
 
-        this.p.remove();
+        this.p.remove(); // remove o titulo da tela enquanto estamos editando
         this.input.value = oldText; // texto do P igual valor do input
 
         this.saveButton.innerText = "Salvar";
         this.saveButton.className = "btn-save";
 
+        // evento de click botão "Salvar" (para typeOfInput "textarea")
         this.saveButton.addEventListener("click", () => {
             this.text = this.input.value;
             this.card.state[this.property] = this.input.value;
+
+            // atualiza o nome da Task
             if(this.property == "text") {
-                this.card.p2.innerText = this.input.value; // usar o p2 e não o p no escopo
+                this.card.p2.innerText = this.input.value; 
             }
 
             this.div.remove();
             this.render();
         });
 
+        // evento salvar título (para typeOfInput "input")
         function clickSaveButton(evento, objeto){
             if(evento.key === 'Enter') {
                 // 13 keyCode do Enter
                 evento.preventDefault();
-                // Salva o titulo alterado ao clickar no Enter
+                // Muda o titulo pelo evento de click acima
                 objeto.saveButton.click();
-                console.log("Salvou o titulo")
             }
               
         }
 
+        // salvar input
         this.input.addEventListener("keyup", (e) => {
-            console.log("teste-")
             if(this.typeOfInput == "input") {
                 clickSaveButton(e, this);
-                console.log("teste")
             }
         });
 
         this.div.append(this.input);
 
+        // abrir textarea
         if(this.typeOfInput == "textarea") {
             this.div.append(this.saveButton)
-            console.log("Abriu descrição")
         };
 
         this.input.select();
