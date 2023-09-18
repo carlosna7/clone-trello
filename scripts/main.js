@@ -2,13 +2,13 @@ const taskContainer = document.querySelector(".box-container");
 const addTodoListInput = document.querySelector(".card-title");
 const addTodoListButton = document.querySelector(".add-card-btn");
 
-// var da localStorage (inicia array vazio)
+// Inicia o localStorage (inicia array vazio)
 let dataBase = JSON.parse(localStorage.getItem("dataB")) || [];
 
-// recarregar os cards salvos no localStorage
+// recarregar os cards existentes salvos no localStorage
 function renderSavedCards() {
     dataBase.forEach((cardData) => {
-        if (cardData.title) {
+        if(cardData) {
             const cardList = new CardList(taskContainer, cardData.title, cardData.tasks);
         };
     });
@@ -28,7 +28,7 @@ addTodoListButton.addEventListener("click", () => {
         // Cria o card
         const cardList = new CardList(taskContainer, textItem);
 
-        // Adiciona a tarefa ao banco de dados e salva no localStorage
+        // Adiciona a e salva o card no localStorage
         dataBase.push({title: textItem, tasks: cardList.taskArray});
         localStorage.setItem("dataB", JSON.stringify(dataBase));
 
@@ -45,7 +45,7 @@ addTodoListButton.addEventListener("click", () => {
     }
 });
 
-//evento de press Enter criar Card
+//evento de pressEnter criar Card
 addTodoListInput.addEventListener("keypress", (eve) => {
     const textItem = addTodoListInput.value.trim();
 
@@ -78,7 +78,7 @@ class CardList {
     addTask(text) {
         // cria a task
         const task = new Task(text, this.ul, this);
-        // objeto com propriedade da task que vai para o array do Card no localStorage
+        // objeto com dados (titulo/nome) da task que vai para o array de tasks do Card no localStorage
         this.taskArray.push({
             text: task.state.text,
         });
@@ -88,7 +88,7 @@ class CardList {
             tasks: this.taskArray
         };
         // verifica se o item armazenado no localStorage tem o mesmo nome do Card
-        // item faz referencia ao title no localStorage
+        // item faz referência ao title no localStorage
         const i = dataBase.findIndex((item) => item.title === this.title);
         if (i > -1) {
             // se o card for encontrado, substituir o i pelo data com os dados da task 
@@ -170,12 +170,12 @@ class CardList {
         });
     }
 
-    // verifica se existe task dentor do array do Card, se sim exibe eles na tela
+    // verifica se existe task dentro do array do Card...
     createTasksElement() {
         if(this.taskArray.length === 0) {
             return;
         }
-
+        // se sim exibir elas em cada Card
         this.taskArray.forEach((taskData) => {
             const task = new Task(taskData.text, this.ul, this);
         });
@@ -183,8 +183,11 @@ class CardList {
 
     // excluir os dados do Card da localStorage e da tela 
     deleteCard() {
+        //remove da tela
         this.cardListElement.remove();
+        // localiza na localStorage um card com o mesmo nome
         const i = dataBase.findIndex((task) => task.title === this.title);
+        // remove o Card da localStorage
         if(i > -1) {
             dataBase.splice(i, 1);
             localStorage.setItem("dataB", JSON.stringify(dataBase))
