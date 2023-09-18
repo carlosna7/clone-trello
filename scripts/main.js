@@ -194,7 +194,7 @@ class CardList {
         }
     }
 
-    // localiza a task especifica no array e exclui os dados 
+    // localiza a task especifica no array e exclui os dados da localStorage (a taskl é removido no metodo dentro da classe Task)
     deleteTask(taskText) {
         const taskIndex = this.taskArray.findIndex((task) => task.text === taskText);
         if (taskIndex > -1) {
@@ -203,7 +203,7 @@ class CardList {
         }
     }
 
-    // mesmo trecho do método addTask()
+    // mesmo trecho do método addTask acima (existe apenas para atualizar a tela após excluir a task)
     updateDatabase() {
         const data = {
             title: this.title,
