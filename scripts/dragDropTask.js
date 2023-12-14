@@ -1,6 +1,7 @@
 function dragAndDrop() {
     const boxList = document.querySelectorAll(".box-list");
     const taskBox = document.querySelectorAll(".task-box");
+
     let isDragging = false;
     let draggingElement = null;
 
@@ -9,15 +10,21 @@ function dragAndDrop() {
 			isDragging = true;
 			draggingElement = event.target;
 			draggingElement.classList.add("dragging");
-		});
+
+			// console.log("dragstart")
+		})
 
 		task.addEventListener("dragend", (event) => {
-			event.preventDefault();
+			event.preventDefault()
+
 			isDragging = false;
+
 			if(draggingElement) {
 				draggingElement.classList.remove("dragging");
 			};
 			draggingElement = null;
+
+			// console.log("dragstop")
 		});
     });
 
@@ -25,10 +32,16 @@ function dragAndDrop() {
 		let isProcessingDrag = false;
 
 		item.addEventListener("dragenter", (even) => {
+
+			console.log("dragenter111")
+
 			if (!isProcessingDrag && isDragging) {
-				isProcessingDrag = true;
+				isProcessingDrag = true
+
+				console.log("dragenter222")
+
 				requestAnimationFrame(() => {
-					even.preventDefault();
+					even.preventDefault()
 
 					const applyAfter = getNewPosition(item, even.clientY);
 
