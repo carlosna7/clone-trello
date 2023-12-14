@@ -1,4 +1,5 @@
 function dragAndDrop() {
+
     const boxList = document.querySelectorAll(".box-list");
     const taskBox = document.querySelectorAll(".task-box");
 
@@ -10,8 +11,6 @@ function dragAndDrop() {
 			isDragging = true;
 			draggingElement = event.target;
 			draggingElement.classList.add("dragging");
-
-			// console.log("dragstart")
 		})
 
 		task.addEventListener("dragend", (event) => {
@@ -23,22 +22,15 @@ function dragAndDrop() {
 				draggingElement.classList.remove("dragging");
 			};
 			draggingElement = null;
-
-			// console.log("dragstop")
 		});
-    });
+    })
 
     boxList.forEach((item) => {
 		let isProcessingDrag = false;
 
 		item.addEventListener("dragenter", (even) => {
-
-			console.log("dragenter111")
-
 			if (!isProcessingDrag && isDragging) {
 				isProcessingDrag = true
-
-				console.log("dragenter222")
 
 				requestAnimationFrame(() => {
 					even.preventDefault()
@@ -55,7 +47,7 @@ function dragAndDrop() {
 				});
 			}
 		});
-    });
+    })
 
     function getNewPosition(tasks, posY) {
 		const cards = tasks.querySelectorAll(".task-box:not(.dragging)");
